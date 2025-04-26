@@ -1,0 +1,26 @@
+neo4j_home
+.direnv
+
+backend/__pycache__
+backend/.env
+
+# output
+frontend/out
+frontend/dist
+frontend/*.tgz
+frontend/coverage
+frontend/*.lcov
+frontend/logs
+frontend/_.log
+frontend/report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+frontend/.env
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/.env.local
+frontend/.eslintcache
+frontend/.cache
+frontend/*.tsbuildinfo
+frontend/.idea
+frontend/.DS_Store
+frontend/node_modules

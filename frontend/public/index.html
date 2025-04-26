@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTMX</title>
+    <script
+      src="https://unpkg.com/htmx.org@2.0.4"
+      integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+  </head>
+
+  <body>
+    <script src="./script.js"></script>
+    <div class="flex gap-5 p-5 h-screen w-full">
+      <!-- Knowledge Graph Column -->
+      <div class="column flex-1 flex flex-col">
+        <div class="flex items-center mb-4">
+          <h2 class="text-2xl flex-grow">Knowledge Graph</h2>
+          <button id="theme-toggle" class="mode-toggle">
+            <!-- Moon icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="dark-icon"
+              viewBox="0 0 24 24"
+              style="display: block"
+            >
+              <path
+                d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"
+              />
+            </svg>
+            <!-- Sun icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="light-icon"
+              viewBox="0 0 24 24"
+              style="display: none"
+            >
+              <circle cx="12" cy="12" r="5" />
+              <path
+                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <form
+          hx-post="http://127.0.0.1:8000/load_knowledge/"
+          hx-trigger="submit"
+          hx-target="#knowledge-response"
+          hx-headers='{"Content-Type": "application/json"}'
+          hx-ext="json-enc"
+          hx-on::before-request="showLoadingMessage(event)"
+          hx-on::after-request="loadGraph()"
+          class="flex gap-2 w-full mb-4"
+        >
+          <input
+            type="text"
+            name="request"
+            placeholder="Enter page name"
+            class="w-4/5 p-2 focus:outline-none"
+            required
+          />
+          <button
+            type="submit"
+            class="p-2 hover:opacity-90 focus:outline-none blue-button"
+          >
+            Load
+          </button>
+          <button
+            type="button"
+            class="p-2 hover:opacity-90 focus:outline-none red-button"
+            hx-post="http://127.0.0.1:8000/delete/"
+            hx-headers='{"Content-Type": "application/json"}'
+            hx-ext="json-enc"
+            hx-target="#knowledge-response"
+            hx-on::after-request="loadGraph()"
+          >
+            Delete
+          </button>
+        </form>
+
+        <div id="knowledge-response" class="text-blue-700 mb-4"></div>
+
+        <!-- Tab Switcher -->
+        <div class="relative z-10 flex">
+          <button
+            id="sigma-tab"
+            class="tab tab-active"
+            title="Faster to load, more performant"
+            onclick="switchGraphTab('sigma')"
+          >
+            sigma
+          </button>
+          <button
+            id="vis-tab"
+            class="tab tab-inactive"
+            title="Interactive and easier to navigate"
+            onclick="switchGraphTab('vis')"
+          >
+            vis
+          </button>
+        </div>
+        <!-- Graph Containers -->
+        <div
+          class="w-full flex-grow relative"
+          style="
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+          "
+          ;
+        >
+          <div
+            id="sigma-graph"
+            class="absolute inset-0"
+            style="display: block"
+          ></div>
+          <div
+            id="vis-graph"
+            class="absolute inset-0"
+            style="display: none"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Chat Column -->
+      <div class="column basis-1/2 max-w-[48%] flex flex-col">
+        <h2 class="text-2xl mb-4">Chat</h2>
+        <div
+          id="chat-messages"
+          class="chat-container flex-grow overflow-y-auto mb-5 p-2 shadow pre-line"
+        ></div>
+        <form
+          hx-post="http://127.0.0.1:8000/query/"
+          hx-trigger="submit"
+          hx-target="#chat-messages"
+          hx-swap="beforeend"
+          hx-headers='{"Content-Type": "application/json"}'
+          hx-ext="json-enc"
+          onsubmit="appendUserMessage(event)"
+          class="flex gap-2"
+        >
+          <input
+            type="text"
+            name="request"
+            placeholder="Enter your message"
+            class="w-7/8 p-2 focus:outline-none"
+            required
+          />
+          <button
+            type="submit"
+            class="w-1/8 p-2 hover:opacity-90 focus:outline-none blue-button"
+          >
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="./graph_switch.js"></script>
+  </body>
+</html>

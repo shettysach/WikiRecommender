@@ -1,0 +1,194 @@
+:root {
+  --background-color: #f8f9fa;
+  --text-color: #202122;
+  --border-color: #a2a9b1;
+  --panel-color: white;
+  --link-color: #3366cc;
+  --button-text: white;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+html.dark {
+  --background-color: #202122;
+  --text-color: #e6e6e6;
+  --border-color: #4a4a4a;
+  --panel-color: #27292d;
+  --link-color: #6699ff;
+  --button-text: white;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 2px 4px -1px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 2px 4px -1px rgba(0, 0, 0, 0.12), 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+    0 4px 6px -2px rgba(0, 0, 0, 0.15);
+}
+
+body {
+  font-family: "Linux Libertine", "Georgia", "Times", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+h2 {
+  font-family: "Linux Libertine", "Georgia", "Times", serif;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: normal;
+  color: var(--text-color);
+}
+
+.column {
+  background-color: var(--panel-color);
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+}
+
+input[type="text"] {
+  border: 1px solid var(--border-color);
+  background-color: var(--panel-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+  box-shadow: var(--shadow);
+}
+
+button {
+  box-shadow: var(--shadow);
+}
+
+.chat-container {
+  border: 1px solid var(--border-color);
+  background-color: var(--panel-color);
+  box-shadow: var(--shadow);
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+}
+
+#knowledge-response {
+  color: var(--link-color);
+  transition: color 0.3s;
+}
+
+.blue-button {
+  background-color: var(--link-color);
+  color: var(--button-text);
+  transition: background-color 0.3s;
+  box-shadow: var(--shadow);
+}
+
+.red-button {
+  background-color: #cc3366;
+  color: var(--button-text);
+  box-shadow: var(--shadow);
+}
+
+.mode-toggle {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--panel-color);
+  border: 1px solid var(--border-color);
+  margin-left: auto;
+}
+
+.mode-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-color);
+}
+
+.user-message {
+  max-width: 75%;
+  width: max-content;
+  margin-left: auto;
+  text-align: right;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem 1rem 0 1rem;
+  background-color: var(--panel-color);
+  color: var(--text-color);
+  font-weight: 500;
+  box-shadow: var(--shadow);
+  word-wrap: break-word;
+  line-height: 1.4;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.bot-message {
+  width: max-content;
+  max-width: 75%;
+  margin-right: auto;
+  text-align: left;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem 1rem 1rem 0;
+  background-color: rgba(160, 160, 160, 0.1); /* subtle gray tone */
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 1rem;
+  box-shadow: var(--shadow);
+  word-wrap: break-word;
+  line-height: 1.5;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.tab {
+  font-weight: normal;
+  font-family: inherit;
+  box-shadow: none;
+  padding: 0rem 1rem;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  margin-right: 0.5rem;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.tab-active {
+  font-weight: bold;
+  background-color: var(--panel-color);
+}
+
+.tab-inactive {
+  color: #777777;
+  background-color: var(--background-color);
+}
+
+.vis-tooltip {
+  position: absolute;
+  visibility: hidden;
+  padding: 5px;
+  white-space: nowrap;
+  color: #000000;
+  background-color: #f5f4ed;
+  border-radius: 3px;
+  border: 1px solid #808074;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  z-index: 5;
+}
